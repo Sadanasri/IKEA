@@ -1,10 +1,12 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const formatPrice = (price) => {
     return new Intl.NumberFormat('en-IN').format(price);
 };
 
 export default function ProductCard({ product, addToCart }) {
+    const navigate = useNavigate();
     const hasOriginalPrice = product.originalPrice && product.originalPrice > product.price;
     const mainBadge = product.badge ? (
         <span className={`badge ${product.badge.toLowerCase().includes('drop') ? 'price-drop' : product.badge.toLowerCase() === 'new' ? 'new' : ''}`}>
@@ -51,7 +53,7 @@ export default function ProductCard({ product, addToCart }) {
     };
 
     return (
-        <div className="product-card">
+        <div className="product-card" onClick={() => navigate(`/product/${product.id}`)}>
             <div className="badges">
                 {mainBadge}
             </div>

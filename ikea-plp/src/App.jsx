@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate, Outlet } from 'react-router-dom';
+import Home from './components/Home';
+import ProductDetail from './components/ProductDetail';
 import PLP from './components/PLP';
 import Login from './components/Login';
 import SignupPersonal from './components/SignupPersonal';
@@ -84,15 +86,19 @@ function App() {
         </div>
       </header>
 
-      {/* The main PLP view */}
-      <PLP addToCart={addToCart} />
+      {/* The main content view */}
+      <Outlet />
     </>
   );
 
   return (
     <div className="app">
       <Routes>
-        <Route path="/" element={<MainLayout />} />
+        <Route element={<MainLayout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/products" element={<PLP addToCart={addToCart} />} />
+          <Route path="/product/:id" element={<ProductDetail addToCart={addToCart} />} />
+        </Route>
         <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
         <Route path="/signup-personal" element={<SignupPersonal />} />
         <Route path="/signup-business" element={<SignupBusiness />} />
